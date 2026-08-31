@@ -141,12 +141,30 @@ function createWindow() {
 
 app.whenReady().then(async () => {
   try {
-    await startServer();
+    if (isDev) {
+      // En dev le serveur tourne déjà via modeling-studio (npm run server)
+      // On vérifie juste qu'il est accessible
+      await new Promise((resolve, reject) => {
+        let attempts = 0;
+        const check = () => {
+          attempts++;
+          http.get(`http://localhost:${PORT_API}/api/health`, (res) => {
+            resolve();
+          }).on('error', () => {
+            if (attempts < 15) setTimeout(check, 300);
+            else reject(new Error(`Serveur non accessible sur :${PORT_API} — lancez d'abord npm run server dans modeling-studio`));
+          });
+        };
+        check();
+      });
+    } else {
+      await startServer();
+    }
     createWindow();
   } catch (err) {
     dialog.showErrorBox(
       'Erreur de démarrage',
-      `Le serveur n'a pas pu démarrer :\n${err.message}\n\nVérifiez que le port ${PORT_API} est disponible.`
+      `${err.message}`
     );
     app.quit();
   }
