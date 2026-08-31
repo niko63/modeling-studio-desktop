@@ -1,0 +1,48 @@
+{
+  "name": "modeling-studio-desktop",
+  "version": "1.0.0",
+  "description": "Electron desktop packaging for Modeling & Simulation Studio",
+  "main": "main.js",
+  "scripts": {
+    "start":     "electron .",
+    "dev":       "electron . --dev",
+    "build:web": "cd modeling-studio && npm install && npm run build",
+    "dist":      "npm run build:web && electron-builder",
+    "dist:win":  "npm run build:web && electron-builder --win",
+    "dist:mac":  "npm run build:web && electron-builder --mac",
+    "dist:linux":"npm run build:web && electron-builder --linux"
+  },
+  "build": {
+    "appId": "fr.modeling-studio.desktop",
+    "productName": "Modeling & Simulation Studio",
+    "directories": { "output": "dist-electron" },
+    "extraResources": [
+      { "from": "modeling-studio/dist", "to": "web" },
+      { "from": "modeling-studio/models", "to": "models", "filter": ["**/*"] },
+      { "from": "modeling-studio/server", "to": "server" },
+      { "from": "modeling-studio/node_modules", "to": "node_modules_server" }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  },
+  "keywords": ["modeling", "simulation", "GRAI", "BPMN", "DEVS", "Actigram"],
+  "author": "niko63",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0"
+  }
+}

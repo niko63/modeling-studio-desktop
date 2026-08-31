@@ -1,0 +1,6 @@
+node_modules/
+dist-electron/
+modeling-studio/node_modules/
+modeling-studio/dist/
+*.log
+.DS_Store

@@ -1,0 +1,3 @@
+[submodule "modeling-studio"]
+	path = modeling-studio
+	url = https://github.com/niko63/modeling-studio.git
