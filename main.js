@@ -110,8 +110,10 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration:  false,
     },
-    show: false, // Afficher seulement quand prêt
+    show: false,
   });
+
+  mainWindow.setMenu(null);
 
   // Charger l'app
   if (isDev) {
