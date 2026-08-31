@@ -117,7 +117,7 @@ function createWindow() {
   if (isDev) {
     // En dev : pointer vers Vite (npm run dev dans modeling-studio)
     mainWindow.loadURL(`http://localhost:${PORT_DEV}`);
-    mainWindow.webContents.openDevTools();
+    //mainWindow.webContents.openDevTools();
   } else {
     // En prod : charger le build statique
     mainWindow.loadFile(path.join(webPath, 'index.html'));
