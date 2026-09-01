@@ -20,7 +20,7 @@
       { "from": "modeling-studio/dist", "to": "web" },
       { "from": "modeling-studio/models", "to": "models", "filter": ["**/*"] },
       { "from": "modeling-studio/server", "to": "server" },
-      { "from": "modeling-studio/node_modules", "to": "node_modules_server" }
+      { "from": "modeling-studio/package.json", "to": "package.json" }
     ],
     "win": {
       "target": "nsis",
