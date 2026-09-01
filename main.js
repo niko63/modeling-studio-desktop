@@ -129,6 +129,7 @@ function createWindow() {
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
     mainWindow.focus();
+    mainWindow.webContents.openDevTools();
   });
 
   // Ouvrir les liens externes dans le navigateur système
