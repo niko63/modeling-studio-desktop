@@ -129,8 +129,6 @@ function createWindow() {
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
     mainWindow.focus();
-    // Debug temporaire — à retirer après diagnostic
-    mainWindow.webContents.openDevTools();
   });
 
   // Ouvrir les liens externes dans le navigateur système
