@@ -48,6 +48,7 @@ function startServer() {
       ...process.env,
       PORT:        String(PORT_API),
       MODELS_PATH: modelsPath,
+      WEB_PATH:    webPath || '',
       NODE_ENV:    isDev ? 'development' : 'production',
     };
 
@@ -121,8 +122,8 @@ function createWindow() {
     mainWindow.loadURL(`http://localhost:${PORT_DEV}`);
     //mainWindow.webContents.openDevTools();
   } else {
-    // En prod : charger le build statique
-    mainWindow.loadFile(path.join(webPath, 'index.html'));
+    // En prod : le serveur Node.js sert aussi les fichiers statiques via WEB_PATH
+    mainWindow.loadURL(`http://localhost:${PORT_API}`);
   }
 
   mainWindow.once('ready-to-show', () => {
