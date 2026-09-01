@@ -4,8 +4,10 @@ Packaging Electron de [modeling-studio](https://github.com/niko63/modeling-studi
 
 ## Prérequis
 
-- Node.js 18+
-- npm 9+
+- Node.js 18+ **doit être installé sur la machine** : https://nodejs.org/en/download
+  - Télécharger la version LTS (Long Term Support)
+  - Windows : choisir l'installeur `.msi` et suivre les étapes
+  - Vérifier l'installation : ouvrir un terminal et taper `node --version`
 
 ## Développement
 
