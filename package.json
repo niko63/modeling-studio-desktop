@@ -16,6 +16,7 @@
     "appId": "fr.modeling-studio.desktop",
     "productName": "Modeling & Simulation Studio",
     "directories": { "output": "dist-electron" },
+    "asar": false,
     "extraResources": [
       { "from": "modeling-studio/dist", "to": "web" },
       { "from": "modeling-studio/models", "to": "models", "filter": ["**/*"] },
