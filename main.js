@@ -47,13 +47,30 @@ let serverProcess = null;
 function startServer() {
   return new Promise((resolve, reject) => {
     console.log('[Desktop] Démarrage du serveur sur', serverPath);
+    console.log('[Desktop] webPath:', webPath);
+    console.log('[Desktop] modelsPath:', modelsPath);
+
+    // Écrire la config dans un fichier que server.js peut lire
+    const configPath = path.join(path.dirname(serverPath), 'electron-config.json');
+    const fs = require('fs');
+    try {
+      fs.writeFileSync(configPath, JSON.stringify({
+        WEB_PATH:    webPath || '',
+        MODELS_PATH: modelsPath,
+        PORT:        PORT_API,
+      }));
+      console.log('[Desktop] Config écrite dans', configPath);
+    } catch (e) {
+      console.error('[Desktop] Impossible d\'écrire la config:', e.message);
+    }
 
     const env = {
       ...process.env,
-      PORT:        String(PORT_API),
-      MODELS_PATH: modelsPath,
-      WEB_PATH:    webPath || '',
-      NODE_ENV:    isDev ? 'development' : 'production',
+      PORT:             String(PORT_API),
+      MODELS_PATH:      modelsPath,
+      WEB_PATH:         webPath || '',
+      ELECTRON_CONFIG:  configPath,
+      NODE_ENV:         isDev ? 'development' : 'production',
     };
 
     serverProcess = fork(serverPath, [], {
