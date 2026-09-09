@@ -22,7 +22,11 @@ const PORT_DEV  = 5190; // Vite en mode dev uniquement
 // En production, les fichiers sont dans resources/
 const resourcesPath = isDev
   ? path.join(__dirname, 'modeling-studio')
-  : process.resourcesPath;
+  : (process.resourcesPath || path.join(path.dirname(app.getPath('exe')), 'resources'));
+
+console.log('[Desktop] resourcesPath:', resourcesPath);
+console.log('[Desktop] __dirname:', __dirname);
+console.log('[Desktop] exe:', app.getPath ? 'app not ready' : process.execPath);
 
 const serverPath = isDev
   ? path.join(__dirname, 'modeling-studio', 'server', 'server.js')
@@ -129,6 +133,7 @@ function createWindow() {
   mainWindow.once('ready-to-show', () => {
     mainWindow.show();
     mainWindow.focus();
+    mainWindow.webContents.openDevTools();
   });
 
   // Ouvrir les liens externes dans le navigateur système
