@@ -8,7 +8,7 @@
     "dev":       "electron . --dev",
     "build:web": "cd modeling-studio && npm install && npm run build",
     "dist":      "npm run build:web && electron-builder",
-    "dist:win":  "npm run build:web && electron-builder --win",
+    "dist:win":  "set CSC_IDENTITY_AUTO_DISCOVERY=false && npm run build:web && electron-builder --win",
     "dist:mac":  "npm run build:web && electron-builder --mac",
     "dist:linux":"npm run build:web && electron-builder --linux"
   },
@@ -26,7 +26,9 @@
     "win": {
       "target": [
         { "target": "portable", "arch": ["x64"] }
-      ]
+      ],
+      "signingHashAlgorithms": null,
+      "sign": null
     },
     "mac": {
       "target": "dmg",
