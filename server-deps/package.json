@@ -1,0 +1,8 @@
+{
+  "name": "modeling-studio-server-deps",
+  "private": true,
+  "description": "Dépendances npm du serveur (server/server.js) embarquées dans le build desktop — package.json séparé du dossier modeling-studio/ car extraResources ne copie PAS node_modules/, et modeling-studio/node_modules (362 Mo, toutes les deps front comprises) serait bien trop volumineux à embarquer tel quel. Ne garder ici QUE ce que server/*.js importe réellement (cf. `npm run build:server-deps`) — si un futur module serveur ajoute une dépendance npm, l'ajouter ici aussi, sinon le .exe plantera au démarrage avec ERR_MODULE_NOT_FOUND.",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0"
+  }
+}

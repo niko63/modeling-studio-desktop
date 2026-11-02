@@ -7,10 +7,11 @@
     "start":     "electron .",
     "dev":       "electron . --dev",
     "build:web": "cd modeling-studio && npm install && npm run build",
-    "dist":      "npm run build:web && electron-builder",
-    "dist:win":  "npm run build:web && electron-builder --win --config.win.target=portable",
-    "dist:mac":  "npm run build:web && electron-builder --mac",
-    "dist:linux":"npm run build:web && electron-builder --linux"
+    "build:server-deps": "cd server-deps && npm install --omit=dev",
+    "dist":      "npm run build:web && npm run build:server-deps && electron-builder",
+    "dist:win":  "npm run build:web && npm run build:server-deps && electron-builder --win --config.win.target=portable",
+    "dist:mac":  "npm run build:web && npm run build:server-deps && electron-builder --mac",
+    "dist:linux":"npm run build:web && npm run build:server-deps && electron-builder --linux"
   },
   "build": {
     "appId": "fr.modeling-studio.desktop",
@@ -21,7 +22,10 @@
       { "from": "modeling-studio/dist", "to": "web" },
       { "from": "modeling-studio/models", "to": "models", "filter": ["**/*"] },
       { "from": "modeling-studio/server", "to": "server" },
-      { "from": "modeling-studio/package.json", "to": "package.json" }
+      { "from": "modeling-studio/package.json", "to": "package.json" },
+      { "from": "server-deps/node_modules", "to": "node_modules", "filter": ["**/*"] },
+      { "from": "modeling-studio/src/uuid.js", "to": "src/uuid.js" },
+      { "from": "modeling-studio/src/bpmn-modeler", "to": "src/bpmn-modeler", "filter": ["**/*"] }
     ],
     "win": {
       "target": [
