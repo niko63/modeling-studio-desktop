@@ -1,6 +1,6 @@
 {
   "name": "modeling-studio-desktop",
-  "version": "1.0.0",
+  "version": "1.0.4",
   "description": "Electron desktop packaging for Modeling & Simulation Studio",
   "main": "main.js",
   "scripts": {
