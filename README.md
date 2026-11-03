@@ -77,7 +77,7 @@ git commit -m "chore: bump modeling-studio submodule"
 
 La version affichée aux utilisateurs vient du tag Git créé sur **modeling-studio-releases**, pas directement de ce repo. Avant de publier une nouvelle release :
 
-1. Mettre à jour `"version"` dans `package.json` de ce repo (actuellement `1.0.0` — champ interne, utilisé par electron-builder pour nommer l'exe)
+1. Mettre à jour `"version"` dans `package.json` de ce repo (champ interne, utilisé par electron-builder pour nommer l'exe)
 2. Builder avec `npm run dist:win`
 3. Publier le binaire (`dist-electron/Modeling & Simulation Studio <version>.exe`) sur **[modeling-studio-releases](https://github.com/niko63/modeling-studio-releases/releases)** avec un nouveau tag (ex. `v1.0.4`) et les notes de version
 4. Vérifier que le README de `modeling-studio-releases` reste à jour (c'est la page que voient les utilisateurs)
@@ -85,6 +85,11 @@ La version affichée aux utilisateurs vient du tag Git créé sur **modeling-stu
 ## Différences vs version web
 
 - Pas de collaboration multi-utilisateur (chaque instance est locale)
-- Les fichiers JSON sont stockés localement dans `resources/models/`
+- Les fichiers JSON (modèles) sont stockés dans le dossier **userData** géré par Electron (`app.getPath('userData')` + `/models`) :
+  - Windows : `%APPDATA%\Modeling & Simulation Studio\models`
+  - macOS : `~/Library/Application Support/Modeling & Simulation Studio/models`
+  - Linux : `~/.config/Modeling & Simulation Studio/models`
+
+  **⚠️ Ne jamais stocker les modèles sous `resourcesPath`/`resources/models`.** Pour la cible "portable" Windows, `resourcesPath` pointe dans `%TEMP%\<id>\resources`, un dossier que l'installeur NSIS supprime et recrée intégralement (`RMDir /r` puis ré-extraction) à **chaque lancement** de l'exe — tout fichier sauvegardé là est perdu à la fermeture de l'appli. `userData` est le seul emplacement stable entre les lancements et les mises à jour (corrigé en v1.0.5, cf. historique des releases).
 - Le serveur Node.js démarre automatiquement en arrière-plan
 - Fonctionne hors réseau

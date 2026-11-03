@@ -36,9 +36,24 @@ const webPath = isDev
   ? null  // En dev on pointe vers Vite
   : path.join(resourcesPath, 'web');
 
+// IMPORTANT : en production, les modèles NE DOIVENT PAS être stockés sous
+// resourcesPath. Pour la cible "portable" Windows (electron-builder/NSIS),
+// resourcesPath pointe dans %TEMP%\<id>\resources — un dossier que NSIS
+// supprime et recrée intégralement (RMDir /r puis ré-extraction) À CHAQUE
+// lancement de l'exe. Tout modèle sauvegardé là serait donc perdu à la
+// fermeture de l'appli. On utilise à la place app.getPath('userData'),
+// dossier stable géré par l'OS (ex. Windows :
+// %APPDATA%\Modeling & Simulation Studio\models), qui persiste entre les
+// lancements et les mises à jour de l'appli.
 const modelsPath = isDev
   ? path.join(__dirname, 'modeling-studio', 'models')
-  : path.join(resourcesPath, 'models');
+  : path.join(app.getPath('userData'), 'models');
+
+try {
+  fs.mkdirSync(modelsPath, { recursive: true });
+} catch (e) {
+  console.error('[Desktop] Impossible de créer modelsPath:', e.message);
+}
 
 // ── Serveur Node.js ───────────────────────────────────────────────────────
 
