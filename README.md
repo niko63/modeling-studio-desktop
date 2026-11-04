@@ -84,7 +84,9 @@ La version affichée aux utilisateurs vient du tag Git créé sur **modeling-stu
 
 ## Différences vs version web
 
-- Pas de collaboration multi-utilisateur (chaque instance est locale)
+- Pas de login ni de notion de compte : identité fixe "Local" (badge figé, pas d'écran de connexion, pages admin/dashboard enseignant inaccessibles même par URL directe)
+- Pas de collaboration multi-utilisateur (chaque instance est locale, présence et verrous d'édition désactivés — pas seulement masqués côté interface)
+- Export JSON par modèle depuis le menu contextuel de la liste de projets (remplace "Partager", sans objet en solo) — réouvrable ensuite via "Ouvrir un modèle" dans chaque éditeur
 - Les fichiers JSON (modèles) sont stockés dans le dossier **userData** géré par Electron (`app.getPath('userData')` + `/models`) :
   - Windows : `%APPDATA%\Modeling & Simulation Studio\models`
   - macOS : `~/Library/Application Support/Modeling & Simulation Studio/models`
