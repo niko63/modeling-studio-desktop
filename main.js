@@ -82,6 +82,11 @@ function startServer() {
     const env = {
       ...process.env,
       PORT:             String(PORT_API),
+      // Une seule instance locale en desktop, jamais joignable depuis le
+      // réseau — surtout depuis que le login est désactivé côté desktop
+      // (identité fixe "Local"), où 0.0.0.0 exposerait l'API sans
+      // protection à quiconque sur le même réseau local.
+      HOST:             '127.0.0.1',
       MODELS_PATH:      modelsPath,
       WEB_PATH:         webPath || '',
       ELECTRON_CONFIG:  configPath,
